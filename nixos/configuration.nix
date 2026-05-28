@@ -25,11 +25,30 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        users = [ "forkd" ];
+        commands = [ { command = "ALL"; options = [ "NOPASSWD" ]; } ];
+      }
+    ];
+  };
+
   # --- opinionated configs ---
   # these are options or programs that are useful for myself but may not be for others,
   # feel free to remove or reconfigure these
 
-  services.tailscale.enable = true;
+  # enable the AWG kernel module (VPN)
+  boot.extraModulePackages = [ config.boot.kernelPackages.amneziawg ];
+
+  # enable the kms server for gpu screen recorder
+  security.wrappers.gsr-kms-server = {
+    source = "${pkgs.gpu-screen-recorder}/bin/gsr-kms-server";
+    capabilities = "cap_sys_admin+ep";
+    owner = "root";
+    group = "root";
+  };
 
   # rebinds capslock to hyper (as an extra modifier, not used on modern keyboards) if held and escape if tapped
   services.keyd = {
@@ -74,7 +93,6 @@
 
   # pretty self explanatory
   programs.steam = { enable = true; remotePlay.openFirewall = true; };
-  programs.amnezia-vpn.enable = true;
 
   # --- nix specific options ---
 
@@ -153,6 +171,8 @@
     docker
     docker-compose
 
+    amneziawg-tools
+
     libsForQt5.qt5ct
     qt6Packages.qt6ct
     kdePackages.breeze
@@ -186,6 +206,7 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
+  programs.nm-applet.enable = true;
 
   services.udisks2.enable = true;
   services.gvfs.enable = true;
@@ -217,6 +238,9 @@
   };
 
   services.libinput.enable = true;
+
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
 
 #  services.minecraft-server = {
 #    enable = true;
