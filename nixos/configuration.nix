@@ -27,9 +27,12 @@
 
   security.sudo = {
     enable = true;
-    extraConfig = ''
-      forkd ALL = NOPASSWD : ALL
-    '';
+    extraRules = [
+      {
+        users = [ "forkd" ];
+        commands = [ { command = "ALL"; options = [ "NOPASSWD" ]; } ];
+      }
+    ];
   };
 
   # --- opinionated configs ---
