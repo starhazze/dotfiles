@@ -27,15 +27,9 @@
 
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/awg-quick";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
+    extraConfig = ''
+      forkd ALL = NOPASSWD : ALL
+    '';
   };
 
   # --- opinionated configs ---
