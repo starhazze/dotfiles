@@ -48,6 +48,8 @@
       ayugram-desktop
       fluffychat
 
+      godot
+
       osu-lazer-bin
       prismlauncher
       heroic
