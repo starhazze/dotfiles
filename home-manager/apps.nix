@@ -47,6 +47,7 @@
       lmms
       ayugram-desktop
       fluffychat
+      inputs.ckgpkgs.packages.${pkgs.system}.commet-chat
 
       godot
 

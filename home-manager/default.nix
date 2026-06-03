@@ -1,5 +1,5 @@
 { pkgs, config, lib, ... }: {
-  imports = [ ./fish.nix ./kitty.nix ./nvim.nix ./wm/niri.nix ./wm/waybar.nix ./apps.nix ./fastfetch.nix ./wm/otter-launcher.nix ./wm/matugen.nix ./wm/swaync.nix ./vesktop.nix ./yazi.nix ];
+  imports = [ ./wm/hyprland.nix ./wm/caelestia.nix ./wm/matugen.nix ./fish.nix ./kitty.nix ./nvim.nix ./apps.nix ./fastfetch.nix ./vesktop.nix ./yazi.nix ];
   home.username = "forkd";
   home.homeDirectory = "/home/forkd";
   home.stateVersion = "25.11";

@@ -20,8 +20,8 @@
       selection_foreground none
       selection_background none
 
-      background_opacity 1
-      background_blur 1
+      background_opacity 0.95
+      background_blur 24
       
       mouse_map alt+left press ungrabbed mouse_selection rectangle";
   };
