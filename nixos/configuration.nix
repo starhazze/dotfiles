@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   imports =
     [
@@ -41,6 +41,14 @@
 
   # enable the AWG kernel module (VPN)
   boot.extraModulePackages = [ config.boot.kernelPackages.amneziawg ];
+
+  # clean up recordings every 3 hours
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "0 */3 * * *  forkd  rm /home/forkd/Videos/Recordings/*"
+    ];
+  };
 
   # enable the kms server for gpu screen recorder
   security.wrappers.gsr-kms-server = {
@@ -109,6 +117,15 @@
     clean.extraArgs = "--keep 3";
     flake = "/home/forkd/dotfiles";
   };
+
+  # overlays
+  nixpkgs.overlays = [
+    (final: prev: {
+      # temp overlay to fix r2modman
+      # https://github.com/NixOS/nixpkgs/pull/523579
+      r2modman = inputs.nixpkgs-r2modman.legacyPackages.${pkgs.system}.r2modman;
+    })
+  ];
   
   # automatically run garbage collector weekly
   # uncomment if you don't want to use NH
@@ -122,10 +139,21 @@
   # almost all of these are pretty much needed or outright essential,
   # but still feel free to delete or swap some ones (like neovim with your preferred editor) out
   programs.fish.enable = true;
-  programs.niri.enable = true;
+  # programs.niri.enable = true;
   programs.hyprland.enable = true;
+  # services.desktopManager.plasma6.enable = true;
   services.flatpak.enable = true;
   programs.firefox.enable = true;
+
+#  environment.plasma6.excludePackages = with pkgs; [
+#    kdePackages.kdepim-runtime
+#    kdePackages.kmahjongg
+#    kdePackages.kmines
+#    kdePackages.konversation
+#    kdePackages.kpat
+#    kdePackages.ksudoku
+#    kdePackages.ktorrent
+#  ];
 
   fonts = {
     packages = with pkgs; [

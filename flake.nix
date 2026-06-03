@@ -46,14 +46,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # --- r2modman, temporary patch. r2 is broken on both stable and unstable ---
+    # https://github.com/NixOS/nixpkgs/pull/523579
+    nixpkgs-r2modman.url = "github:PartlyAwesome/nixpkgs/741658bdb24fdcdb322e3cfc47a71df73add91f9";
+
     # --- matugen ---
-    matugen = {
-      url = "github:/InioX/Matugen";
-    };
+    matugen.url = "github:/InioX/Matugen";
+
+    # --- commet-chat the matrix client ---
+    ckgpkgs.url = "git+https://codeberg.org/ckgxrg/ckgpkgs";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixvim, otter-launcher, ... }: {
-
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
