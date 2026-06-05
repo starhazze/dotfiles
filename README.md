@@ -1,6 +1,6 @@
 <div align="center">
 
-# undrrdawg's shitty dotfiles
+# haze's shitty dotfiles
 <details>
   <summary>screenshots</summary>
   <br>
