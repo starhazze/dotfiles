@@ -41,7 +41,6 @@
       vscodium
       cinny
       vlc
-      redact
       feishin
       insomnia
       lmms
@@ -50,6 +49,8 @@
       inputs.ckgpkgs.packages.${pkgs.system}.commet-chat
 
       godot
+      android-tools
+      ncdu
 
       osu-lazer-bin
       prismlauncher

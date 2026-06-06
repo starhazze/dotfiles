@@ -17,10 +17,10 @@
   time.timeZone = "Europe/Moscow";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # user setup, change "forkd" to your name
-  users.users.forkd = {
+  # user setup, change "starhaze" to your name
+  users.users.starhaze = {
     isNormalUser = true;
-    description = "fork";
+    description = "starhaze";
     shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" ];
   };
@@ -141,19 +141,19 @@
   programs.fish.enable = true;
   # programs.niri.enable = true;
   programs.hyprland.enable = true;
-  # services.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
   services.flatpak.enable = true;
   programs.firefox.enable = true;
 
-#  environment.plasma6.excludePackages = with pkgs; [
-#    kdePackages.kdepim-runtime
-#    kdePackages.kmahjongg
-#    kdePackages.kmines
-#    kdePackages.konversation
-#    kdePackages.kpat
-#    kdePackages.ksudoku
-#    kdePackages.ktorrent
-#  ];
+  environment.plasma6.excludePackages = with pkgs; [
+    kdePackages.kdepim-runtime
+    kdePackages.kmahjongg
+    kdePackages.kmines
+    kdePackages.konversation
+    kdePackages.kpat
+    kdePackages.ksudoku
+    kdePackages.ktorrent
+  ];
 
   fonts = {
     packages = with pkgs; [

@@ -71,7 +71,7 @@
             nixvim.homeModules.nixvim
             otter-launcher.homeModules.default
           ];
-          home-manager.users.forkd = import ./home-manager;
+          home-manager.users.starhaze = import ./home-manager;
 	  home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];

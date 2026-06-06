@@ -36,16 +36,102 @@
       input_path = '${config.xdg.configHome}/matugen/templates/midnight-discord.css'
       output_path = '${config.xdg.configHome}/vesktop/themes/midnight-discord.css'
 
-      [templates.cava]
-      input_path = "${config.xdg.configHome}/matugen/templates/cava-colors.ini"
-      output_path = "${config.xdg.configHome}/cava/colors.ini"
-      post_hook = "pkill -USR1 cava"
+      [templates.kitty]
+      input_path = "${config.xdg.configHome}/matugen/templates/kitty-colors.conf"
+      output_path = "${config.xdg.configHome}/kitty/current-theme.conf"
+      post_hook = "pkill -USR1 kitty"
     '';
 
     # --- templates ---   
 
     "matugen/templates/system-theme.txt".text = ''
       {{ mode }}
+    '';
+
+    "matugen/templates/kitty-colors.conf".text = ''
+      <* if {{ is_dark_mode }} *>
+      cursor {{colors.on_surface.default.hex}}
+      cursor_text_color {{colors.on_surface_variant.default.hex}}
+      
+      foreground            {{colors.on_surface.default.hex}}
+      background            {{colors.surface.default.hex}}
+      selection_foreground  {{colors.on_secondary.default.hex}}
+      selection_background  {{colors.secondary_fixed_dim.default.hex}}
+      url_color             {{colors.primary.default.hex}}
+
+      # black
+      color8   #262626
+      color0   #4c4c4c
+      
+      # red
+      color1   #ac8a8c
+      color9   #c49ea0
+      
+      # green
+      color2   #8aac8b
+      color10  #9ec49f
+      
+      # yellow
+      color3   #aca98a
+      color11  #c4c19e
+      
+      # blue
+      color4  {{colors.primary.default.hex}}
+      color12 #a39ec4
+      
+      # magenta
+      color5   #ac8aac
+      color13  #c49ec4
+      
+      # cyan
+      color6   #8aacab
+      color14  #9ec3c4
+      
+      # white
+      color15   #e7e7e7
+      color7  #f0f0f0   
+      <* else *>
+      cursor {{colors.on_surface.light.hex}}
+      cursor_text_color {{colors.on_surface_variant.light.hex}}
+      
+      foreground            {{colors.on_surface.light.hex}}
+      background            {{colors.surface.light.hex}}
+      selection_foreground  {{colors.on_secondary.light.hex}}
+      selection_background  {{colors.secondary_fixed_dim.light.hex}}
+      url_color             {{colors.primary.light.hex}}
+
+      # black
+      color8   #262626
+      color0   #4c4c4c
+      
+      # red
+      color1   #ac8a8c
+      color9   #c49ea0
+      
+      # green
+      color2   #8aac8b
+      color10  #9ec49f
+      
+      # yellow
+      color3   #aca98a
+      color11  #c4c19e
+      
+      # blue
+      color4  {{colors.primary.default.hex}}
+      color12 #a39ec4
+      
+      # magenta
+      color5   #ac8aac
+      color13  #c49ec4
+      
+      # cyan
+      color6   #8aacab
+      color14  #9ec3c4
+      
+      # white
+      color15   #e7e7e7
+      color7  #f0f0f0   
+      <* endif *>
     '';
 
     "matugen/templates/pywalfox-colors.json".text = ''
