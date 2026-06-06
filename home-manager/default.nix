@@ -15,13 +15,6 @@
     gtk4.extraCss = "@import 'colors.css';";
   };
 
-  programs.git = {
-    enable = true;
-    aliases = {
-      sb = "!git checkout main && git rebase nixos && git push --force-with-lease && git checkout caelestia && git rebase nixos && git push --force-with-lease && git checkout nixos && git push"; # sync nixos and niri/caelestia branches (niri is main)
-    };
-  };
-
   services.gnome-keyring = {
     enable = true;
     components = [ "secrets" ];
