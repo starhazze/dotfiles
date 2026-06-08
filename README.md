@@ -1,17 +1,11 @@
 <div align="center">
 
-# undrrdawg's shitty dotfiles
+# haze's shitty dotfiles
 <details>
   <summary>screenshots</summary>
   <br>
-  <img src="assets/screenshots/red.png">
-  <img src="assets/screenshots/light.png">
-  <img src="assets/screenshots/everforest.png">
-  <img src="assets/screenshots/nord.png">
-  <img src="assets/screenshots/catppuccin.png">
+  ...it's just caelestia with a bit of hyprland & apps customization on this branch, for the niri rice please see the main branch
 </details>
-
-be aware that this rice is a bit incomplete so you might encounter some styling bugs, i have no idea how to fix some of them
 </div>
 
 ## details
