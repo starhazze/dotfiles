@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }: {
   imports = [ ./wm/hyprland.nix ./wm/caelestia.nix ./wm/matugen.nix ./fish.nix ./kitty.nix ./nvim.nix ./apps.nix ./fastfetch.nix ./vesktop.nix ./yazi.nix ];
-  home.username = "forkd";
-  home.homeDirectory = "/home/forkd";
+  home.username = "starhaze";
+  home.homeDirectory = "/home/starhaze";
   home.stateVersion = "25.11";
 
   gtk = {

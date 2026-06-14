@@ -17,8 +17,8 @@
   time.timeZone = "Europe/Moscow";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # user setup, change "forkd" to your name
-  users.users.forkd = {
+  # user setup, change "starhaze" to your name
+  users.users.starhaze = {
     isNormalUser = true;
     description = "fork";
     shell = pkgs.fish;
@@ -29,7 +29,7 @@
     enable = true;
     extraRules = [
       {
-        users = [ "forkd" ];
+        users = [ "starhaze" ];
         commands = [ { command = "ALL"; options = [ "NOPASSWD" ]; } ];
       }
     ];
@@ -46,7 +46,7 @@
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 */3 * * *  forkd  rm /home/forkd/Videos/Recordings/*"
+      "0 */3 * * *  starhaze  rm /home/forkd/Videos/Recordings/*"
     ];
   };
 
@@ -75,7 +75,7 @@
     settings = {
       background.path = "/etc/greetd/Wallpapers/Ultrakill/strays_and_v1.png";
       appearance.greeting_msg = "hello dawg. touch grass sometime";
-      GTK.css_path = "/home/forkd/.config/gtk-4.0/gtk.css";
+      GTK.css_path = "/home/starhaze/.config/gtk-4.0/gtk.css";
     };
     font = {
       name = "Poppins";
@@ -115,7 +115,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep 3";
-    flake = "/home/forkd/dotfiles";
+    flake = "/home/starhaze/dotfiles";
   };
 
   # overlays
@@ -285,7 +285,7 @@
 #      motd = "super cool local server";
 #    };
 #    whitelist = {
-#      forkd_owo = "9993ba3a-9b23-4029-bcd5-7d15a978ec71";
+#      starhaze_owo = "9993ba3a-9b23-4029-bcd5-7d15a978ec71";
 #    };
 #  };
 
