@@ -46,8 +46,33 @@
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 */3 * * *  forkd  rm /home/forkd/Videos/Recordings/*"
+      "0 */3 * * *  starhaze  rm /home/starhaze/Videos/Recordings/*"
     ];
+  };
+
+  services.caddy = {
+    enable = true;
+    virtualHosts."localhost".extraConfig = ''
+      file_server
+      root * /var/www/local
+    '';
+  };
+
+  systemd.services.sync-local-site = {
+    description = "Sync local site to /var/www/local";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.rsync}/bin/rsync -a --delete /home/starhaze/Projects/web/local/ /var/www/local/";
+    };
+  };
+  
+  systemd.paths.sync-local-site = {
+    description = "Watch local site for changes";
+    wantedBy = [ "multi-user.target" ];
+    pathConfig = {
+      PathChanged = "/home/starhaze/Projects/web/local";
+      Unit = "sync-local-site.service";
+    };
   };
 
   # enable the kms server for gpu screen recorder
@@ -110,6 +135,10 @@
   # allow proprietary apps to be installed
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "ventoy-1.1.12"
+  ];
+
   # enable NH the nix cli helper
   programs.nh = {
     enable = true;
@@ -140,8 +169,11 @@
   # but still feel free to delete or swap some ones (like neovim with your preferred editor) out
   programs.fish.enable = true;
   # programs.niri.enable = true;
-  programs.hyprland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  programs.hyprland = { 
+    enable = true;
+    withUWSM = true; # use the UWSM-managed option so stuff works properly
+    xwayland.enable = true;
+  };
   services.flatpak.enable = true;
   programs.firefox.enable = true;
 
@@ -233,15 +265,20 @@
   services.blueman.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   programs.nm-applet.enable = true;
 
   services.udisks2.enable = true;
   services.gvfs.enable = true;
 
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    configPackages = [ pkgs.hyprland ];
   };
 
   qt = {

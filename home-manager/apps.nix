@@ -1,6 +1,7 @@
-{ pkgs, pkgs-stable, inputs, ... }:
+{ pkgs, inputs, ... }: {
+  programs.vesktop.enable = true;
+  programs.discord.enable = true;
 
-{ 
   home = {
     packages = with pkgs; [
       # --- shell ---
@@ -30,6 +31,7 @@
       gpu-screen-recorder
 
       # --- personal apps i use, you can remove these ---
+      vencord
       inkscape
       easyeffects
       kdePackages.elisa
@@ -51,6 +53,8 @@
       godot
       android-tools
       ncdu
+      dart-sass
+      ventoy
 
       osu-lazer-bin
       prismlauncher

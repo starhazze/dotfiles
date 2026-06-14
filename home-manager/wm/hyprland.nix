@@ -1,5 +1,4 @@
 { config, ... }: {
-
   xdg.configFile."hypr/vars.lua".text = ''
     return {
       term        = "kitty",

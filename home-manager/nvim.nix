@@ -10,6 +10,18 @@
       nvim-cmp.enable = true;
     };
 
+    autoGroups = {
+      indent_settings = { clear = true; };
+    };
+    
+    autoCmd = [
+      {
+        event = [ "BufEnter" "FileType" ];
+        group = "indent_settings";
+        command = "setlocal tabstop=2 shiftwidth=2 expandtab smartindent";
+      }
+    ];
+
     keymaps = [
       {
         mode = "v";
