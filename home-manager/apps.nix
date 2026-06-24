@@ -31,12 +31,10 @@
       gpu-screen-recorder
 
       # --- personal apps i use, you can remove these ---
-      vencord
       inkscape
       easyeffects
       kdePackages.elisa
       kdePackages.kdeconnect-kde
-      librewolf
       inputs.firefox.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin
       obs-studio
       qbittorrent

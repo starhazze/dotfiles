@@ -22,19 +22,6 @@
     firefox.url = "github:nix-community/flake-firefox-nightly";
     firefox.inputs.nixpkgs.follows = "nixpkgs";
 
-    # --- flake-parts for otter --- 
-    systems.url = "github:nix-systems/default-linux";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # --- otter-launcher --- 
-    otter-launcher = {
-      url = "github:kuokuo123/otter-launcher";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-
     # --- caelestia shell/cli ---
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
@@ -46,9 +33,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # --- r2modman, temporary patch. r2 is broken on both stable and unstable ---
-    # https://github.com/NixOS/nixpkgs/pull/523579
-    nixpkgs-r2modman.url = "github:PartlyAwesome/nixpkgs/741658bdb24fdcdb322e3cfc47a71df73add91f9";
+    # --- singularity (shell) ---
+    singularity-desktop.url = "github:mateoalfaro/singularity-flake";
 
     # --- matugen ---
     matugen.url = "github:/InioX/Matugen";
@@ -57,22 +43,22 @@
     ckgpkgs.url = "git+https://codeberg.org/ckgxrg/ckgpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, otter-launcher, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, singularity-desktop, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         { nixpkgs.hostPlatform = "x86_64-linux"; }
         ./nixos/configuration.nix
         home-manager.nixosModules.home-manager
+        singularity-desktop.nixosModules.default
         {
           home-manager.useGlobalPkgs    = true;
           home-manager.useUserPackages  = true;
           home-manager.sharedModules    = [
             nixvim.homeModules.nixvim
-            otter-launcher.homeModules.default
           ];
-          home-manager.users.starhaze = import ./home-manager;
-	  home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.starhaze   = import ./home-manager;
+	        home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];
     };

@@ -3,6 +3,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./sddm.nix
     ];
 
   # --- essential options ---
@@ -92,22 +93,6 @@
     };
   };
 
-  # regreet (greetd) config, swap with your preferred display manager if you want to
-  programs.regreet = {
-    enable = true;
-    theme.name = "adw-gtk3-dark";
-    cursorTheme.name = "Bibata";
-    settings = {
-      background.path = "/etc/greetd/Wallpapers/Ultrakill/strays_and_v1.png";
-      appearance.greeting_msg = "hello dawg. touch grass sometime";
-      GTK.css_path = "/home/forkd/.config/gtk-4.0/gtk.css";
-    };
-    font = {
-      name = "Poppins";
-      size = 16;
-    };
-  };
-
   # navidrome, a music server. you'll probably not need this at all
   services.navidrome = {
     enable = true;
@@ -146,15 +131,6 @@
     clean.extraArgs = "--keep 3";
     flake = "/home/forkd/dotfiles";
   };
-
-  # overlays
-  nixpkgs.overlays = [
-    (final: prev: {
-      # temp overlay to fix r2modman
-      # https://github.com/NixOS/nixpkgs/pull/523579
-      r2modman = inputs.nixpkgs-r2modman.legacyPackages.${pkgs.system}.r2modman;
-    })
-  ];
   
   # automatically run garbage collector weekly
   # uncomment if you don't want to use NH
@@ -168,24 +144,17 @@
   # almost all of these are pretty much needed or outright essential,
   # but still feel free to delete or swap some ones (like neovim with your preferred editor) out
   programs.fish.enable = true;
-  # programs.niri.enable = true;
+
   programs.hyprland = { 
     enable = true;
-    withUWSM = true; # use the UWSM-managed option so stuff works properly
+    withUWSM = true;
     xwayland.enable = true;
   };
-  services.flatpak.enable = true;
-  programs.firefox.enable = true;
 
-  environment.plasma6.excludePackages = with pkgs; [
-    kdePackages.kdepim-runtime
-    kdePackages.kmahjongg
-    kdePackages.kmines
-    kdePackages.konversation
-    kdePackages.kpat
-    kdePackages.ksudoku
-    kdePackages.ktorrent
-  ];
+  services.flatpak.enable = true;
+
+  # programs.singularity-desktop = { enable = true; };
+  services.desktopManager.gnome.enable = true;
 
   fonts = {
     packages = with pkgs; [
@@ -259,7 +228,6 @@
   boot.initrd.luks.devices."luks-c42416f3-d1ce-4a19-853e-9751e5792d69".device = "/dev/disk/by-uuid/c42416f3-d1ce-4a19-853e-9751e5792d69";
 
   networking.networkmanager.enable = true;
-  networking.enableIPv6 = false;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -325,6 +293,31 @@
 #      forkd_owo = "9993ba3a-9b23-4029-bcd5-7d15a978ec71";
 #    };
 #  };
+
+  networking.nftables.enable = true;
+  networking.nftables.ruleset = ''
+    table inet mangle {
+      chain input {
+        type filter hook input priority mangle; policy accept;
+        iifname "fi" tcp flags syn,ack tcp option maxseg size set 1320
+      }
+      chain output {
+        type filter hook output priority mangle; policy accept;
+        oifname "fi" tcp flags syn tcp option maxseg size set 1320
+      }
+    }
+  '';
+
+  networking.enableIPv6 = false;
+  
+  boot.kernelParams = [
+    "ipv6.disable=1"
+  ];
+  
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.all.disable_ipv6" = true;
+    "net.ipv6.conf.default.disable_ipv6" = true;
+  };
 
 
   # --- state version ---

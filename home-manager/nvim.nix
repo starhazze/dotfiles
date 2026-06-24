@@ -7,7 +7,6 @@
       nvim-tree.enable = true;
       web-devicons.enable = true;
       luasnip.enable = true;
-      nvim-cmp.enable = true;
     };
 
     autoGroups = {

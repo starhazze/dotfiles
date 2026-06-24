@@ -2,7 +2,7 @@
   xdg.configFile."hypr/vars.lua".text = ''
     return {
       term        = "kitty",
-      screenshot  = "caelestia shell picker open",
+      screenshot  = "flameshot gui",
       files       = "nautilus",
       dmenu       = "caelestia shell drawers toggle launcher",
       shell       = "caelestia-shell -d",
